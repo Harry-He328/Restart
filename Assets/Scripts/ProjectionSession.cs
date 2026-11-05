@@ -1,0 +1,96 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
+namespace Restart
+{
+    [DefaultExecutionOrder(100)]
+    public sealed class ProjectionSession : MonoBehaviour
+    {
+        [SerializeField] private PlayerMotor2D player;
+        [SerializeField] private Text attemptText;
+        [SerializeField] private Transform projectionRoot;
+        private readonly List<ProjectionRecording> recordings = new List<ProjectionRecording>();
+        private readonly List<ProjectionActor> projections = new List<ProjectionActor>();
+        private ProjectionRecording current;
+        private Rigidbody2D playerBody;
+        private bool toggleRequested;
+        private bool restartedThisStep;
+        private float step;
+        public int AttemptTick { get; private set; }
+        public float AttemptTime => AttemptTick * step;
+        public bool IsRecording => current != null;
+        public IReadOnlyList<ProjectionRecording> Recordings => recordings;
+        public IReadOnlyList<ProjectionActor> Projections => projections;
+
+        private void Awake()
+        {
+            step = Time.fixedDeltaTime;
+            playerBody = player.GetComponent<Rigidbody2D>();
+            player.Restarting += OnRestart;
+            player.CheckpointActivated += OnRestart;
+        }
+        private void OnDestroy()
+        {
+            if (player == null) return;
+            player.Restarting -= OnRestart;
+            player.CheckpointActivated -= OnRestart;
+        }
+        private void Update()
+        {
+            if (Keyboard.current != null && Keyboard.current.rKey.wasPressedThisFrame)
+                toggleRequested = true;
+        }
+        private void FixedUpdate()
+        {
+            if (restartedThisStep) { restartedThisStep = false; return; }
+            if (toggleRequested)
+            {
+                toggleRequested = false;
+                if (IsRecording) EndRecording();
+                else
+                {
+                    current = new ProjectionRecording(AttemptTick, step);
+                    current.Capture(AttemptTick, playerBody);
+                }
+            }
+            if (IsRecording) current.Capture(AttemptTick, playerBody);
+            foreach (var projection in projections) projection.Step(AttemptTick);
+            AttemptTick++;
+        }
+        private void EndRecording()
+        {
+            if (current == null) return;
+            current.Capture(AttemptTick, playerBody);
+            if (current.Frames.Count >= 2) recordings.Add(current);
+            current = null;
+        }
+        private void OnRestart()
+        {
+            EndRecording(); // Capture the old pose before the motor teleports to spawn.
+            toggleRequested = false;
+            AttemptTick = 0;
+            restartedThisStep = true;
+            while (projections.Count < recordings.Count)
+            {
+                var actor = new GameObject($"Projection {projections.Count + 1}").AddComponent<ProjectionActor>();
+                actor.transform.SetParent(projectionRoot, false);
+                actor.Initialize(recordings[projections.Count], player, projections.Count + 1);
+                projections.Add(actor);
+            }
+            foreach (var projection in projections) projection.ResetPlayback();
+        }
+        private void LateUpdate()
+        {
+            if (attemptText != null)
+            {
+                int minutes = (int)(AttemptTime / 60);
+                float seconds = AttemptTime - minutes * 60;
+                attemptText.text = (IsRecording ? "REC  " : "") + $"{minutes:00}:{seconds:00.00}";
+                attemptText.color = IsRecording ? new Color(1, 0.36f, 0.4f) : new Color(0.8f, 0.94f, 0.96f);
+            }
+            foreach (var projection in projections) projection.UpdatePresentation(AttemptTick);
+        }
+    }
+}
