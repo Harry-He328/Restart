@@ -10,11 +10,17 @@ namespace Restart
         public CapsuleCollider2D Collider { get; private set; }
         public Rigidbody2D Body { get; private set; }
         private SpriteRenderer[] visuals;
+        private Color[] originalColors;
+        private PlayerMotor2D player;
+        private CapsuleCollider2D playerCollider;
+        public bool AwaitingRestart { get; private set; }
         private readonly Color tint = new Color(0.26f, 0.91f, 0.85f, 0.7f);
 
-        public void Initialize(ProjectionRecording recording, PlayerMotor2D player, int id)
+        public void Initialize(ProjectionRecording recording, PlayerMotor2D player, int id, bool awaitingRestart = false)
         {
             Recording = recording;
+            this.player = player;
+            playerCollider = player.GetComponent<CapsuleCollider2D>();
             gameObject.layer = 7;
             Body = gameObject.AddComponent<Rigidbody2D>();
             Body.bodyType = RigidbodyType2D.Kinematic;
@@ -45,28 +51,40 @@ namespace Restart
                 renderer.flipY = original.flipY;
                 renderer.sortingLayerID = original.sortingLayerID;
                 renderer.sortingOrder = original.sortingOrder - 2;
-                renderer.color = (original.transform == player.transform ? Color.white : original.color) * tint;
+                renderer.color = original.transform == player.transform ? Color.white : original.color;
             }
             visuals = GetComponentsInChildren<SpriteRenderer>();
+            originalColors = new Color[visuals.Length];
+            for (int i = 0; i < visuals.Length; i++) originalColors[i] = visuals[i].color;
             ResetPlayback();
+            if (awaitingRestart)
+            {
+                AwaitingRestart = true;
+                Collider.enabled = false;
+                UpdatePresentation(0);
+            }
         }
 
         public void ResetPlayback()
         {
+            AwaitingRestart = false;
             Collider.enabled = Recording.DurationTicks > 0;
             Body.linearVelocity = Vector2.zero;
             Body.position = Recording.Frames[0].Position;
             Body.rotation = Recording.Frames[0].Rotation;
             transform.position = Body.position;
+            ApplyPlayerCollision();
             UpdatePresentation(0);
         }
 
         // Called before physics: move to the next recorded boundary so kinematic contacts push the player.
         public void Step(int tick)
         {
+            if (AwaitingRestart) return;
             bool playing = tick >= 0 && tick < Recording.DurationTicks;
             Collider.enabled = playing;
             if (!playing) { Body.linearVelocity = Vector2.zero; return; }
+            ApplyPlayerCollision();
             if (tick == 0)
             {
                 Body.position = Recording.Frames[0].Position;
@@ -79,16 +97,23 @@ namespace Restart
 
         public void UpdatePresentation(int tick)
         {
-            IsVisible = tick >= 0 && tick < Recording.DurationTicks;
-            IsPlaying = IsVisible;
-            foreach (var renderer in visuals)
+            IsVisible = AwaitingRestart || (tick >= 0 && tick < Recording.DurationTicks);
+            IsPlaying = IsVisible && !AwaitingRestart;
+            for (int i = 0; i < visuals.Length; i++)
             {
+                var renderer = visuals[i];
                 renderer.enabled = IsVisible;
-                var color = renderer.color;
-                color.a = 0.7f;
+                var color = originalColors[i] * (AwaitingRestart ? Color.white : tint);
+                color.a = AwaitingRestart ? 0.3f : 0.7f;
                 renderer.color = color;
             }
-            if (!IsVisible) Collider.enabled = false;
+            if (!IsVisible || AwaitingRestart) Collider.enabled = false;
+        }
+
+        private void ApplyPlayerCollision()
+        {
+            if (player != null && playerCollider != null && Collider.enabled)
+                Physics2D.IgnoreCollision(playerCollider, Collider, player.IgnoresProjectionCollision);
         }
     }
 }

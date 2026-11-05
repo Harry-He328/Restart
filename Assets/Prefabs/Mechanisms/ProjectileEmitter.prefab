@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8708166355842656604}
   m_Layer: 0
-  m_Name: Muzzle
+  m_Name: "\u70AE\u53E3"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 3809951436604565998}
   - component: {fileID: 6850100352943013785}
   m_Layer: 0
-  m_Name: Barrel
+  m_Name: "\u70AE\u7BA1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

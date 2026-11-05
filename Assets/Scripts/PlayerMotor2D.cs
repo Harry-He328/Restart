@@ -25,7 +25,7 @@ namespace Restart
         [SerializeField] private float dashDuration = 0.18f;
         [SerializeField] private float dashCooldown = 0.15f;
         [Header("Climbing - hold E on marked walls")]
-        [SerializeField] private LayerMask climbableLayers = 1 << 8;
+        [SerializeField] private LayerMask climbableLayers = (1 << 6) | (1 << 8);
         [SerializeField] private float climbSpeed = 4.5f;
         [SerializeField] private float wallJumpHorizontalSpeed = 10.5f;
         [SerializeField] private float wallJumpLockTime = 0.16f;
@@ -36,6 +36,9 @@ namespace Restart
         private CapsuleCollider2D capsule;
         private readonly RaycastHit2D[] groundHits = new RaycastHit2D[8];
         private Vector2 spawnPosition;
+        private Vector2? recordingRespawnPosition;
+        private float projectionPassThroughUntil;
+        public bool IgnoresProjectionCollision => Time.time < projectionPassThroughUntil;
         private float horizontalInput;
         private bool jumpHeld;
         private float lastGrounded = float.NegativeInfinity;
@@ -122,7 +125,9 @@ namespace Restart
                 return;
             }
 
-            var filter = new ContactFilter2D { useLayerMask = true, layerMask = groundLayers, useTriggers = false };
+            int solidLayers = groundLayers.value;
+            if (IgnoresProjectionCollision) solidLayers &= ~(1 << 7);
+            var filter = new ContactFilter2D { useLayerMask = true, layerMask = solidLayers, useTriggers = false };
             int count = capsule.Cast(Vector2.down, filter, groundHits, 0.065f);
             IsGrounded = false;
             Vector2 supportVelocity = Vector2.zero;
@@ -176,7 +181,7 @@ namespace Restart
             }
             if (IsDashing)
             {
-                var dashFilter = new ContactFilter2D { useLayerMask = true, layerMask = groundLayers, useTriggers = false };
+                var dashFilter = new ContactFilter2D { useLayerMask = true, layerMask = solidLayers, useTriggers = false };
                 float speed = dashSpeed;
                 int hits = capsule.Cast(dashDirection, dashFilter, groundHits, dashSpeed * Time.fixedDeltaTime + 0.015f);
                 for (int i = 0; i < hits; i++)
@@ -247,8 +252,11 @@ namespace Restart
             {
                 int count = capsule.Cast(Vector2.right * side, filter, groundHits, 0.12f);
                 for (int i = 0; i < count; i++)
-                    if (groundHits[i].normal.x * side < -0.65f && groundHits[i].collider.GetComponentInParent<ClimbableWall>() != null)
-                        return side;
+                {
+                    if (groundHits[i].normal.x * side >= -0.65f) continue;
+                    var wall = groundHits[i].collider.GetComponentInParent<ClimbableWall>();
+                    if (wall != null && wall.CanClimbAt(groundHits[i].point, groundHits[i].normal)) return side;
+                }
             }
             return 0;
         }
@@ -260,6 +268,8 @@ namespace Restart
         }
 
         public void RequestDeath() => deathRequested = true;
+
+        public void SetRecordingRespawnPosition(Vector2 position) => recordingRespawnPosition = position;
 
         public bool ActivateCheckpoint(Checkpoint2D checkpoint, Vector2 position)
         {
@@ -273,9 +283,11 @@ namespace Restart
 
         public void Respawn()
         {
+            projectionPassThroughUntil = Time.time + 1f;
             Restarting?.Invoke();
-            body.position = spawnPosition;
-            transform.position = spawnPosition;
+            Vector2 destination = recordingRespawnPosition ?? spawnPosition;
+            body.position = destination;
+            transform.position = destination;
             body.linearVelocity = Vector2.zero;
             lastGrounded = lastJumpPressed = float.NegativeInfinity;
             jumpConsumed = false;

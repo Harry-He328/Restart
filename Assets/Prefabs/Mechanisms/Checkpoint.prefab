@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3673678942715077501}
   - component: {fileID: 5253738633162149640}
   m_Layer: 0
-  m_Name: Base
+  m_Name: "\u5E95\u5EA7"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8086658988609602210}
   m_Layer: 0
-  m_Name: Respawn Point
+  m_Name: "\u590D\u6D3B\u4F4D\u7F6E"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 5078330149027435925}
   - component: {fileID: 6951417373932029441}
   m_Layer: 0
-  m_Name: Pole
+  m_Name: "\u65D7\u6746"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 7463932525232596843}
   - component: {fileID: 8328113096104519916}
   m_Layer: 0
-  m_Name: Flag
+  m_Name: "\u65D7\u5E1C"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

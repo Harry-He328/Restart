@@ -14,6 +14,7 @@ namespace Restart
         private readonly List<ProjectionRecording> recordings = new List<ProjectionRecording>();
         private readonly List<ProjectionActor> projections = new List<ProjectionActor>();
         private ProjectionRecording current;
+        private ProjectionActor currentProjection;
         private Rigidbody2D playerBody;
         private bool toggleRequested;
         private bool restartedThisStep;
@@ -51,6 +52,11 @@ namespace Restart
                 {
                     current = new ProjectionRecording(AttemptTick, step);
                     current.Capture(AttemptTick, playerBody);
+                    player.SetRecordingRespawnPosition(current.Frames[0].Position);
+                    currentProjection = new GameObject($"投影 {projections.Count + 1}").AddComponent<ProjectionActor>();
+                    currentProjection.transform.SetParent(projectionRoot, false);
+                    currentProjection.Initialize(current, player, projections.Count + 1, true);
+                    projections.Add(currentProjection);
                 }
             }
             if (IsRecording) current.Capture(AttemptTick, playerBody);
@@ -62,7 +68,13 @@ namespace Restart
             if (current == null) return;
             current.Capture(AttemptTick, playerBody);
             if (current.Frames.Count >= 2) recordings.Add(current);
+            else if (currentProjection != null)
+            {
+                projections.Remove(currentProjection);
+                Destroy(currentProjection.gameObject);
+            }
             current = null;
+            currentProjection = null;
         }
         private void OnRestart()
         {
@@ -70,13 +82,6 @@ namespace Restart
             toggleRequested = false;
             AttemptTick = 0;
             restartedThisStep = true;
-            while (projections.Count < recordings.Count)
-            {
-                var actor = new GameObject($"Projection {projections.Count + 1}").AddComponent<ProjectionActor>();
-                actor.transform.SetParent(projectionRoot, false);
-                actor.Initialize(recordings[projections.Count], player, projections.Count + 1);
-                projections.Add(actor);
-            }
             foreach (var projection in projections) projection.ResetPlayback();
         }
         private void LateUpdate()

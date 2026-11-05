@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 8783709987572763055}
   - component: {fileID: 7409747122831303096}
   m_Layer: 8
-  m_Name: Climbable Tilemap
+  m_Name: "\u53EF\u6500\u722C\u5730\u5F62"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
