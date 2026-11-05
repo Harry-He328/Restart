@@ -53,7 +53,7 @@ namespace Restart
                     current = new ProjectionRecording(AttemptTick, step);
                     current.Capture(AttemptTick, playerBody);
                     player.SetRecordingRespawnPosition(current.Frames[0].Position);
-                    currentProjection = new GameObject($"投影 {projections.Count + 1}").AddComponent<ProjectionActor>();
+                    currentProjection = new GameObject($"Projection {projections.Count + 1}").AddComponent<ProjectionActor>();
                     currentProjection.transform.SetParent(projectionRoot, false);
                     currentProjection.Initialize(current, player, projections.Count + 1, true);
                     projections.Add(currentProjection);

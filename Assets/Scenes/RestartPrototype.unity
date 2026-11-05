@@ -127,6 +127,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 136096337}
     m_Modifications:
+    - target: {fileID: 1369822348482071802, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Base
+      objectReference: {fileID: 0}
     - target: {fileID: 1558435462453354843, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.2
@@ -167,9 +171,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6410047988855977637, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Respawn Point
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082296116165451636, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Pole
+      objectReference: {fileID: 0}
     - target: {fileID: 7838126776240417344, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
       propertyPath: m_Name
-      value: "\u6B63\u5F0F\u5173\u5361\u5165\u53E3"
+      value: Checkpoint - Projection Entry
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219368628779491474, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Flag
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -191,7 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 112081875}
   m_Layer: 0
-  m_Name: "\u6295\u5F71"
+  m_Name: Projections
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,6 +239,10 @@ PrefabInstance:
     - target: {fileID: 4647228583750283997, guid: 1968824f9ac67a34297f5160f7020f7e, type: 3}
       propertyPath: m_Name
       value: ClimbableWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589858895234431964, guid: 1968824f9ac67a34297f5160f7020f7e, type: 3}
+      propertyPath: m_Name
+      value: Climbable Tilemap
       objectReference: {fileID: 0}
     - target: {fileID: 8733690639527687329, guid: 1968824f9ac67a34297f5160f7020f7e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -279,7 +299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 136096337}
   m_Layer: 0
-  m_Name: "\u68C0\u67E5\u70B9"
+  m_Name: Checkpoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,7 +336,7 @@ GameObject:
   - component: {fileID: 137789647}
   - component: {fileID: 137789646}
   m_Layer: 0
-  m_Name: "\u754C\u9762"
+  m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -397,6 +417,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 136096337}
     m_Modifications:
+    - target: {fileID: 1369822348482071802, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Base
+      objectReference: {fileID: 0}
     - target: {fileID: 1558435462453354843, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.4
@@ -437,9 +461,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6410047988855977637, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Respawn Point
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082296116165451636, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Pole
+      objectReference: {fileID: 0}
     - target: {fileID: 7838126776240417344, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
       propertyPath: m_Name
-      value: "\u6B63\u5F0F\u5173\u5361\u5165\u53E3"
+      value: Checkpoint - Formal Entry
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219368628779491474, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Flag
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -459,9 +495,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1136194565}
     m_Modifications:
+    - target: {fileID: 986639202803955169, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
+      propertyPath: m_Name
+      value: Muzzle
+      objectReference: {fileID: 0}
     - target: {fileID: 3931512260297395900, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
       propertyPath: m_Name
-      value: "\u53D1\u5C04\u5668"
+      value: ProjectileEmitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441846698609235005, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
+      propertyPath: m_Name
+      value: Barrel
       objectReference: {fileID: 0}
     - target: {fileID: 5141017623601509947, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -523,7 +567,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2976329476948530838, guid: e3b329f5c33664e49a8969d3cf2e7350, type: 3}
       propertyPath: m_Name
-      value: "\u5730\u523A"
+      value: Spikes
       objectReference: {fileID: 0}
     - target: {fileID: 7826827797336733231, guid: e3b329f5c33664e49a8969d3cf2e7350, type: 3}
       propertyPath: m_LocalPosition.x
@@ -676,7 +720,7 @@ GameObject:
   m_Component:
   - component: {fileID: 475104088}
   m_Layer: 0
-  m_Name: "\u6559\u5B66\u63D0\u793A"
+  m_Name: Tutorial Hints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -709,7 +753,7 @@ GameObject:
   - component: {fileID: 585909508}
   - component: {fileID: 585909507}
   m_Layer: 0
-  m_Name: "\u672C\u6B21\u5C1D\u8BD5\u8BA1\u65F6"
+  m_Name: Attempt Time
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -789,7 +833,7 @@ GameObject:
   - component: {fileID: 606370294}
   - component: {fileID: 606370293}
   m_Layer: 0
-  m_Name: "\u5F55\u5236\u5C4F\u5E55\u6548\u679C"
+  m_Name: Recording Screen Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -874,7 +918,7 @@ GameObject:
   m_Component:
   - component: {fileID: 631527048}
   m_Layer: 0
-  m_Name: "\u5173\u5361"
+  m_Name: Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -907,6 +951,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 136096337}
     m_Modifications:
+    - target: {fileID: 1369822348482071802, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Base
+      objectReference: {fileID: 0}
     - target: {fileID: 1558435462453354843, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: -25.3
@@ -947,9 +995,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6410047988855977637, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Respawn Point
+      objectReference: {fileID: 0}
+    - target: {fileID: 7082296116165451636, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Pole
+      objectReference: {fileID: 0}
     - target: {fileID: 7838126776240417344, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
       propertyPath: m_Name
-      value: "\u6B63\u5F0F\u5173\u5361\u5165\u53E3"
+      value: Checkpoint - After Dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219368628779491474, guid: 7d9590d0e487803458d92f550cee30fe, type: 3}
+      propertyPath: m_Name
+      value: Flag
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -974,8 +1034,9 @@ GameObject:
   - component: {fileID: 734678224}
   - component: {fileID: 734678223}
   - component: {fileID: 734678222}
+  - component: {fileID: 734678227}
   m_Layer: 0
-  m_Name: "\u73A9\u5BB6"
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1157,6 +1218,52 @@ Transform:
   - {fileID: 1995356127}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &734678227
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734678221}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 3a41977e87a39bb428aaf86f60fb748b, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.64500004}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 0.7, y: 1.45}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 1
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 0.7, y: 0.16}
+  m_EdgeRadius: 0
 --- !u!1 &799223168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,8 +1276,9 @@ GameObject:
   - component: {fileID: 799223169}
   - component: {fileID: 799223170}
   - component: {fileID: 799223172}
+  - component: {fileID: 799223173}
   m_Layer: 0
-  m_Name: "\u4E3B\u76F8\u673A"
+  m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1272,6 +1380,50 @@ MonoBehaviour:
     height: 29
   viewHeight: 6
   smoothTime: 0.15
+--- !u!114 &799223173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 799223168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &970425479
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,7 +1435,7 @@ GameObject:
   - component: {fileID: 970425480}
   - component: {fileID: 970425481}
   m_Layer: 0
-  m_Name: "\u5730\u5F62"
+  m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1327,7 +1479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1136194565}
   m_Layer: 0
-  m_Name: "\u673A\u5173"
+  m_Name: Mechanisms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1372,7 +1524,7 @@ GameObject:
   - component: {fileID: 1416948341}
   - component: {fileID: 1416948346}
   m_Layer: 6
-  m_Name: "\u5730\u5F62 Tilemap"
+  m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5875,7 +6027,7 @@ GameObject:
   - component: {fileID: 1430085011}
   - component: {fileID: 1430085010}
   m_Layer: 0
-  m_Name: "\u6E38\u620F\u7BA1\u7406"
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5921,19 +6073,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 327248813843452470, guid: 48640b41c96499448b9cb6dd0fd252db, type: 3}
       propertyPath: m_Name
-      value: "\u5E73\u53F0\u672C\u4F53"
+      value: Platform
       objectReference: {fileID: 0}
     - target: {fileID: 970311394134376022, guid: 48640b41c96499448b9cb6dd0fd252db, type: 3}
       propertyPath: m_Name
-      value: "\u79FB\u52A8\u5E73\u53F0"
+      value: MovingPlatform
       objectReference: {fileID: 0}
     - target: {fileID: 4341195994611491731, guid: 48640b41c96499448b9cb6dd0fd252db, type: 3}
       propertyPath: m_Name
-      value: "\u7AEF\u70B9B"
+      value: Point B
       objectReference: {fileID: 0}
     - target: {fileID: 5992825298074072169, guid: 48640b41c96499448b9cb6dd0fd252db, type: 3}
       propertyPath: m_Name
-      value: "\u7AEF\u70B9A"
+      value: Point A
       objectReference: {fileID: 0}
     - target: {fileID: 6102009702336863443, guid: 48640b41c96499448b9cb6dd0fd252db, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5997,7 +6149,7 @@ GameObject:
   - component: {fileID: 1806342710}
   - component: {fileID: 1806342709}
   m_Layer: 6
-  m_Name: "\u5165\u53E3\u63A9\u4F53"
+  m_Name: Entry Cover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6131,9 +6283,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1136194565}
     m_Modifications:
+    - target: {fileID: 986639202803955169, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
+      propertyPath: m_Name
+      value: Muzzle
+      objectReference: {fileID: 0}
     - target: {fileID: 3931512260297395900, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
       propertyPath: m_Name
-      value: "\u6559\u5B66\u53D1\u5C04\u5668_\u4E0A\u8DEF"
+      value: Gallery Emitter - Upper
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441846698609235005, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
+      propertyPath: m_Name
+      value: Barrel
       objectReference: {fileID: 0}
     - target: {fileID: 5141017623601509947, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6229,7 +6389,7 @@ GameObject:
   - component: {fileID: 1847077675}
   - component: {fileID: 1847077674}
   m_Layer: 12
-  m_Name: "\u6295\u5F71\u6321\u5F39\u95E8"
+  m_Name: Projection Shield Gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6472,9 +6632,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1136194565}
     m_Modifications:
+    - target: {fileID: 986639202803955169, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
+      propertyPath: m_Name
+      value: Muzzle
+      objectReference: {fileID: 0}
     - target: {fileID: 3931512260297395900, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
       propertyPath: m_Name
-      value: "\u6559\u5B66\u53D1\u5C04\u5668_\u4E0B\u8DEF"
+      value: Gallery Emitter - Lower
+      objectReference: {fileID: 0}
+    - target: {fileID: 4441846698609235005, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
+      propertyPath: m_Name
+      value: Barrel
       objectReference: {fileID: 0}
     - target: {fileID: 5141017623601509947, guid: b38d3e90e89ceb44bad337983012272f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6563,7 +6731,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2118130840}
   m_Layer: 0
-  m_Name: "\u521D\u59CB\u51FA\u751F\u70B9"
+  m_Name: Start Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6596,7 +6764,7 @@ GameObject:
   - component: {fileID: 2138879694}
   - component: {fileID: 2138879693}
   m_Layer: 10
-  m_Name: "\u5751\u5E95\u6B7B\u4EA1\u533A"
+  m_Name: Pit Death Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -8,11 +8,12 @@ namespace Restart
         public bool IsPlaying { get; private set; }
         public bool IsVisible { get; private set; }
         public CapsuleCollider2D Collider { get; private set; }
+        public BoxCollider2D HeadCollider { get; private set; }
         public Rigidbody2D Body { get; private set; }
         private SpriteRenderer[] visuals;
         private Color[] originalColors;
         private PlayerMotor2D player;
-        private CapsuleCollider2D playerCollider;
+        private Collider2D[] playerColliders;
         public bool AwaitingRestart { get; private set; }
         private readonly Color tint = new Color(0.26f, 0.91f, 0.85f, 0.7f);
 
@@ -20,7 +21,7 @@ namespace Restart
         {
             Recording = recording;
             this.player = player;
-            playerCollider = player.GetComponent<CapsuleCollider2D>();
+            playerColliders = player.GetComponents<Collider2D>();
             gameObject.layer = 7;
             Body = gameObject.AddComponent<Rigidbody2D>();
             Body.bodyType = RigidbodyType2D.Kinematic;
@@ -35,6 +36,13 @@ namespace Restart
             Collider.direction = source.direction;
             Collider.sharedMaterial = source.sharedMaterial;
             Collider.enabled = false;
+            var sourceHead = player.GetComponent<BoxCollider2D>();
+            HeadCollider = gameObject.AddComponent<BoxCollider2D>();
+            HeadCollider.size = sourceHead != null ? sourceHead.size : new Vector2(source.size.x, 0.16f);
+            HeadCollider.offset = sourceHead != null ? sourceHead.offset
+                : source.offset + Vector2.up * (source.size.y * 0.5f - 0.08f);
+            HeadCollider.sharedMaterial = source.sharedMaterial;
+            HeadCollider.enabled = false;
             foreach (var original in player.GetComponentsInChildren<SpriteRenderer>())
             {
                 var visual = new GameObject(original.gameObject.name + " Projection", typeof(SpriteRenderer));
@@ -60,7 +68,7 @@ namespace Restart
             if (awaitingRestart)
             {
                 AwaitingRestart = true;
-                Collider.enabled = false;
+                SetCollisionEnabled(false);
                 UpdatePresentation(0);
             }
         }
@@ -68,7 +76,7 @@ namespace Restart
         public void ResetPlayback()
         {
             AwaitingRestart = false;
-            Collider.enabled = Recording.DurationTicks > 0;
+            SetCollisionEnabled(Recording.DurationTicks > 0);
             Body.linearVelocity = Vector2.zero;
             Body.position = Recording.Frames[0].Position;
             Body.rotation = Recording.Frames[0].Rotation;
@@ -82,7 +90,7 @@ namespace Restart
         {
             if (AwaitingRestart) return;
             bool playing = tick >= 0 && tick < Recording.DurationTicks;
-            Collider.enabled = playing;
+            SetCollisionEnabled(playing);
             if (!playing) { Body.linearVelocity = Vector2.zero; return; }
             ApplyPlayerCollision();
             if (tick == 0)
@@ -107,13 +115,24 @@ namespace Restart
                 color.a = AwaitingRestart ? 0.3f : 0.7f;
                 renderer.color = color;
             }
-            if (!IsVisible || AwaitingRestart) Collider.enabled = false;
+            if (!IsVisible || AwaitingRestart) SetCollisionEnabled(false);
+        }
+
+        private void SetCollisionEnabled(bool enabled)
+        {
+            Collider.enabled = enabled;
+            HeadCollider.enabled = enabled;
         }
 
         private void ApplyPlayerCollision()
         {
-            if (player != null && playerCollider != null && Collider.enabled)
+            if (player == null || playerColliders == null || !Collider.enabled) return;
+            foreach (var playerCollider in playerColliders)
+            {
+                if (playerCollider == null) continue;
                 Physics2D.IgnoreCollision(playerCollider, Collider, player.IgnoresProjectionCollision);
+                Physics2D.IgnoreCollision(playerCollider, HeadCollider, player.IgnoresProjectionCollision);
+            }
         }
     }
 }

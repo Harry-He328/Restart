@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 8783709987572763055}
   - component: {fileID: 7409747122831303096}
   m_Layer: 8
-  m_Name: "\u53EF\u6500\u722C\u5730\u5F62"
+  m_Name: Climbable Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -272,6 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc3163efeaf5cbf40a9a4a493f3d796d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Restart.ClimbableWall
+  restrictToTiles: 0
+  climbableTiles: []
 --- !u!50 &6671305452416814169
 Rigidbody2D:
   serializedVersion: 5

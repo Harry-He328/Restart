@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4255713281290362894}
   - component: {fileID: 304384302969067001}
   m_Layer: 9
-  m_Name: "\u5E73\u53F0\u672C\u4F53"
+  m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -241,7 +241,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5364571422608298200}
   m_Layer: 0
-  m_Name: "\u7AEF\u70B9B"
+  m_Name: Point B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -272,7 +272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4533554671587323696}
   m_Layer: 0
-  m_Name: "\u7AEF\u70B9A"
+  m_Name: Point A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
