@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Restart
 {
-    // Mechanisms share the player's restart boundary, including death and Escape.
+    // Death may reset mechanisms; a short Escape only resets player and projections.
     public abstract class AttemptMechanism : MonoBehaviour
     {
         private PlayerMotor2D player;
@@ -12,7 +12,7 @@ namespace Restart
             player = FindFirstObjectByType<PlayerMotor2D>();
             if (player != null)
             {
-                player.Restarting += ResetAttempt;
+                player.MechanismsResetting += ResetAttempt;
             }
             ResetAttempt();
         }
@@ -20,7 +20,7 @@ namespace Restart
         {
             if (player != null)
             {
-                player.Restarting -= ResetAttempt;
+                player.MechanismsResetting -= ResetAttempt;
             }
         }
         protected abstract void ResetAttempt();

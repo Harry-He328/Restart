@@ -66,6 +66,7 @@ namespace Restart
         public PlayerMotionState MotionState => IsDashing ? PlayerMotionState.Dashing : IsClimbing ? PlayerMotionState.Climbing : PlayerMotionState.Normal;
         public int RestartCount { get; private set; }
         public event System.Action Restarting;
+        public event System.Action MechanismsResetting;
         public Checkpoint2D ActiveCheckpoint { get; private set; }
 
         private void Awake()
@@ -91,7 +92,6 @@ namespace Restart
             {
                 keyboardAxis = (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed ? 1f : 0f)
                     - (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed ? 1f : 0f);
-                restartRequested |= keyboard.escapeKey.wasPressedThisFrame;
                 keyboardVertical = (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed ? 1f : 0f)
                     - (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed ? 1f : 0f);
             }
@@ -119,7 +119,7 @@ namespace Restart
         {
             if (restartRequested || deathRequested || body.position.y < deathHeight)
             {
-                Respawn();
+                Respawn(deathRequested || body.position.y < deathHeight);
                 return;
             }
 
@@ -268,6 +268,7 @@ namespace Restart
         }
 
         public void RequestDeath() => deathRequested = true;
+        public void RequestRestart() => restartRequested = true;
 
         public void SetRecordingRespawnPosition(Vector2 position) => recordingRespawnPosition = position;
 
@@ -281,9 +282,10 @@ namespace Restart
             return true;
         }
 
-        public void Respawn()
+        public void Respawn(bool resetMechanisms = true)
         {
             projectionPassThroughUntil = Time.time + 1f;
+            if (resetMechanisms) MechanismsResetting?.Invoke();
             Restarting?.Invoke();
             Vector2 destination = recordingRespawnPosition ?? spawnPosition;
             body.position = destination;

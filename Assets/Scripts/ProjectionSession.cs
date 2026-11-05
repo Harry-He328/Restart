@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 namespace Restart
 {
@@ -9,7 +8,6 @@ namespace Restart
     public sealed class ProjectionSession : MonoBehaviour
     {
         [SerializeField] private PlayerMotor2D player;
-        [SerializeField] private Text attemptText;
         [SerializeField] private Transform projectionRoot;
         private readonly List<ProjectionRecording> recordings = new List<ProjectionRecording>();
         private readonly List<ProjectionActor> projections = new List<ProjectionActor>();
@@ -76,6 +74,14 @@ namespace Restart
             current = null;
             currentProjection = null;
         }
+
+        public void CompleteAttempt()
+        {
+            EndRecording();
+            toggleRequested = false;
+            LateUpdate();
+            enabled = false;
+        }
         private void OnRestart()
         {
             EndRecording(); // Capture the old pose before the motor teleports to spawn.
@@ -86,13 +92,6 @@ namespace Restart
         }
         private void LateUpdate()
         {
-            if (attemptText != null)
-            {
-                int minutes = (int)(AttemptTime / 60);
-                float seconds = AttemptTime - minutes * 60;
-                attemptText.text = (IsRecording ? "REC  " : "") + $"{minutes:00}:{seconds:00.00}";
-                attemptText.color = IsRecording ? new Color(1, 0.36f, 0.4f) : new Color(0.8f, 0.94f, 0.96f);
-            }
             foreach (var projection in projections) projection.UpdatePresentation(AttemptTick);
         }
     }
