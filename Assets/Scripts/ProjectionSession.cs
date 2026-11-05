@@ -29,13 +29,11 @@ namespace Restart
             step = Time.fixedDeltaTime;
             playerBody = player.GetComponent<Rigidbody2D>();
             player.Restarting += OnRestart;
-            player.CheckpointActivated += OnRestart;
         }
         private void OnDestroy()
         {
             if (player == null) return;
             player.Restarting -= OnRestart;
-            player.CheckpointActivated -= OnRestart;
         }
         private void Update()
         {

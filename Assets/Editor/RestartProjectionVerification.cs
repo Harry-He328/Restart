@@ -52,8 +52,8 @@ namespace Restart.Editor
                 await Restart(keyboard, player);
                 Check(session.AttemptTick < 6 && session.Projections.Count == 1, "Escape resets time and creates the historical projection", results);
                 var ghost = session.Projections[0];
-                Check(ghost.IsVisible && !ghost.Collider.enabled && ghost.Countdown.gameObject.activeSelf,
-                    "Waiting projection is visible, has a countdown and no collision", results);
+                Check(ghost.IsVisible && ghost.IsPlaying && ghost.Collider.enabled,
+                    "Projection immediately plays with collision", results);
                 body.position = new Vector2(-14, 0.74f);
                 await WaitTicks(session, first.StartTick + 10);
                 int frame = session.AttemptTick - first.StartTick;
@@ -66,8 +66,8 @@ namespace Restart.Editor
                 Check(session.AttemptTick == pausedTick, "Pause freezes attempt time and playback", results);
                 EditorApplication.isPaused = false;
                 await WaitTicks(session, first.EndTick + 3);
-                Check(!ghost.IsVisible && !ghost.Collider.enabled && !ghost.Countdown.gameObject.activeSelf,
-                    "Finished projection and countdown disappear with collision removed", results);
+                Check(!ghost.IsVisible && !ghost.Collider.enabled,
+                    "Finished projection disappears with collision removed", results);
 
                 await Restart(keyboard, player);
                 Check(session.Recordings.Count == 1 && ghost.IsVisible && !ghost.Collider.enabled,

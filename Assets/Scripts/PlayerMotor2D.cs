@@ -64,7 +64,6 @@ namespace Restart
         public PlayerMotionState MotionState => IsDashing ? PlayerMotionState.Dashing : IsClimbing ? PlayerMotionState.Climbing : PlayerMotionState.Normal;
         public int RestartCount { get; private set; }
         public event System.Action Restarting;
-        public event System.Action CheckpointActivated;
         public Checkpoint2D ActiveCheckpoint { get; private set; }
 
         private void Awake()
@@ -269,8 +268,6 @@ namespace Restart
             ActiveCheckpoint = checkpoint;
             spawnPosition = position;
             checkpoint.SetActivated(true);
-            // A checkpoint starts a new timing segment without teleporting the live player.
-            CheckpointActivated?.Invoke();
             return true;
         }
 

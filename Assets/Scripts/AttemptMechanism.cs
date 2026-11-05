@@ -13,7 +13,6 @@ namespace Restart
             if (player != null)
             {
                 player.Restarting += ResetAttempt;
-                player.CheckpointActivated += ResetAttempt;
             }
             ResetAttempt();
         }
@@ -22,7 +21,6 @@ namespace Restart
             if (player != null)
             {
                 player.Restarting -= ResetAttempt;
-                player.CheckpointActivated -= ResetAttempt;
             }
         }
         protected abstract void ResetAttempt();

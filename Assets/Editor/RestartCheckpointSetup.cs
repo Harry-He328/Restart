@@ -67,7 +67,7 @@ namespace Restart.Editor
             AssetDatabase.SaveAssets();
             EditorSceneManager.MarkSceneDirty(player.gameObject.scene);
             EditorSceneManager.SaveScene(player.gameObject.scene);
-            Debug.Log("[Restart] Checkpoints placed. Gallery interval 0.9s; formal burst interval 3.5s. Checkpoint activation keeps projection history and starts a fresh timing segment.");
+            Debug.Log("[Restart] Checkpoints placed. Gallery interval 0.9s; formal burst interval 3.5s. Checkpoints only update the respawn position; recording, projections, time and mechanisms continue unchanged.");
         }
 
         private static void SetEmitter(ProjectileEmitter2D emitter, bool gallery)

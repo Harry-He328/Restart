@@ -23,6 +23,7 @@ namespace Restart
         private readonly List<ProjectionFrame> frames = new List<ProjectionFrame>();
         public int StartTick { get; }
         public int EndTick => StartTick + frames.Count - 1;
+        public int DurationTicks => Mathf.Max(0, frames.Count - 1);
         public float Step { get; }
         public IReadOnlyList<ProjectionFrame> Frames => frames;
         public ProjectionRecording(int startTick, float step) { StartTick = startTick; Step = step; }
