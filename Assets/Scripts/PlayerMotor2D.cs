@@ -24,7 +24,7 @@ namespace Restart
         [SerializeField] private float dashSpeed = 24f;
         [SerializeField] private float dashDuration = 0.18f;
         [SerializeField] private float dashCooldown = 0.15f;
-        [Header("Climbing - hold E on marked walls")]
+        [Header("Climbing - Up/Down on marked walls; release to hang")]
         [SerializeField] private LayerMask climbableLayers = (1 << 6) | (1 << 8);
         [SerializeField] private float climbSpeed = 4.5f;
         [SerializeField] private float wallJumpHorizontalSpeed = 10.5f;
@@ -48,7 +48,6 @@ namespace Restart
         private bool deathRequested;
         private Rigidbody2D groundSupport;
         private float verticalInput;
-        private bool grabHeld;
         private bool dashRequested;
         private Vector2 dashInput;
         private Vector2 dashDirection;
@@ -101,7 +100,6 @@ namespace Restart
             float verticalStick = gamepad != null ? gamepad.leftStick.y.ReadValue() : 0f;
             verticalInput = Mathf.Abs(verticalStick) > 0.15f ? verticalStick : keyboardVertical;
             if (Mathf.Abs(horizontalInput) > 0.15f) facingDirection = horizontalInput > 0 ? 1 : -1;
-            grabHeld = (keyboard != null && keyboard.eKey.isPressed) || (gamepad != null && gamepad.leftShoulder.isPressed);
             bool dashPressed = (keyboard != null && (keyboard.leftShiftKey.wasPressedThisFrame || keyboard.rightShiftKey.wasPressedThisFrame))
                 || (gamepad != null && gamepad.buttonEast.wasPressedThisFrame);
             if (dashPressed)
@@ -198,8 +196,10 @@ namespace Restart
 
             int touchingWall = FindClimbableWall();
             bool wasClimbing = IsClimbing;
-            IsClimbing = grabHeld && touchingWall != 0 && Time.time >= wallJumpUntil
-                && (!IsGrounded || Mathf.Abs(verticalInput) > 0.1f);
+            bool movingAway = touchingWall != 0 && horizontalInput * touchingWall < -0.15f;
+            IsClimbing = touchingWall != 0 && Time.time >= wallJumpUntil && !movingAway
+                && (wasClimbing || Mathf.Abs(verticalInput) > 0.1f)
+                && (!IsGrounded || verticalInput > 0.1f);
             if (IsClimbing)
             {
                 wallDirection = touchingWall;
@@ -219,7 +219,7 @@ namespace Restart
                 }
                 return;
             }
-            if (wasClimbing && grabHeld && verticalInput > 0.1f && touchingWall == 0)
+            if (wasClimbing && verticalInput > 0.1f && touchingWall == 0)
             {
                 ledgeAssistUntil = Time.time + 0.14f;
                 body.linearVelocity = new Vector2(wallDirection * moveSpeed, Mathf.Max(body.linearVelocity.y, 4f));
@@ -308,7 +308,6 @@ namespace Restart
             if (focused) return;
             horizontalInput = 0f;
             verticalInput = 0f;
-            grabHeld = false;
             dashRequested = false;
             jumpHeld = false;
             lastJumpPressed = float.NegativeInfinity;
