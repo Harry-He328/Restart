@@ -66,7 +66,6 @@ namespace Restart
         public PlayerMotionState MotionState => IsDashing ? PlayerMotionState.Dashing : IsClimbing ? PlayerMotionState.Climbing : PlayerMotionState.Normal;
         public int RestartCount { get; private set; }
         public event System.Action Restarting;
-        public event System.Action MechanismsResetting;
         public Checkpoint2D ActiveCheckpoint { get; private set; }
 
         private void Awake()
@@ -119,7 +118,7 @@ namespace Restart
         {
             if (restartRequested || deathRequested || body.position.y < deathHeight)
             {
-                Respawn(deathRequested || body.position.y < deathHeight);
+                Respawn();
                 return;
             }
 
@@ -282,10 +281,9 @@ namespace Restart
             return true;
         }
 
-        public void Respawn(bool resetMechanisms = true)
+        public void Respawn()
         {
             projectionPassThroughUntil = Time.time + 1f;
-            if (resetMechanisms) MechanismsResetting?.Invoke();
             Restarting?.Invoke();
             Vector2 destination = recordingRespawnPosition ?? spawnPosition;
             body.position = destination;
